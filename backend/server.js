@@ -8,7 +8,6 @@ dotenv.config();
 const PORT = process.env.PORT || 5000
 
 app.get("/",(req,res) => {
-    //root route http://localhost:5000/ 
     res.send("Hello world!!");
 })
 
