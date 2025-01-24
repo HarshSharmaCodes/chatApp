@@ -17,9 +17,9 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-app.get("/", (req, res) => {
-	res.send("Hello World!");
-});
+// app.get("/", (req, res) => {
+// 	res.send("Hello World!");
+// });
 
 app.listen(PORT, () => {
 	connectToMongoDB();
