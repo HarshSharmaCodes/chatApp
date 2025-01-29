@@ -1,18 +1,20 @@
-import { useState } from 'react';
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 const useSignup = () => {
-    const [loading, setloading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const signup = async ({ fullname, username, password, confirmPassword, gender }) => {
-        const success = handleInputErrors({ fullname, username, password, confirmPassword, gender })
+    const signup = async ({ fullName, username, password, confirmPassword, gender }) => {
+        const success = handleInputErrors({ fullName, username, password, confirmPassword, gender });
         if (!success) return;
-        setloading(true);
+
+        setLoading(true);
         try {
-            const res = await fetch("/api/auth/signup", {
+            const res = await fetch("api/auth/signup",
+            {
                 method: "POST",
-                headers: { "content-Type": "application/json" },
-                body: JSON.stringify({ fullname, username, password, confirmPassword, gender }),
+				headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ fullName, username, password, confirmPassword, gender }),
             });
 
             const data = await res.json();
@@ -21,16 +23,17 @@ const useSignup = () => {
             toast.error(error.message);
         }
         finally {
-            setloading(false);
+            setLoading(false);
         }
     };
+    
     return { loading, signup };
 };
 
 export default useSignup;
 
-function handleInputErrors({ fullname, username, password, confirmPassword, gender }) {
-    if (!fullname || !username || !password || !confirmPassword || !gender) {
+function handleInputErrors({ fullName, username, password, confirmPassword, gender }) {
+    if (!fullName || !username || !password || !confirmPassword || !gender) {
         toast.error("Please fill in all the fields.")
         return false;
     }
@@ -47,5 +50,3 @@ function handleInputErrors({ fullname, username, password, confirmPassword, gend
 
     return true;
 }
-
-
