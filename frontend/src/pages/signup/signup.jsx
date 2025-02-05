@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import GenderCheckbox from './GenderCheckbox.jsx';
 import useSignup from '../../hooks/useSignup.js';
+import GenderCheckbox from './GenderCheckbox.jsx';
 
 const Signup = () => {
     const [inputs, setInputs] = useState({
@@ -72,7 +72,9 @@ const Signup = () => {
                         Already have an account?
                     </Link>
                     <div>
-                        <button className='btn btn-block btn-sm mt-2 border border-slate-700'> Sign Up </button>
+                        <button className='btn btn-block btn-sm mt-2 border border-slate-700'disabled={loading}>
+                            {loading ? <span className='loading loading-spinner'></span>: "Sign up"} 
+                            </button>
                     </div>
                 </form>
             </div>
