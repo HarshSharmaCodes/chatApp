@@ -12,25 +12,21 @@ const useSignup = () => {
 
         setLoading(true);
         try {
-            const res = await fetch("api/auth/signup",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ fullName, username, password, confirmPassword, gender }),
-                });
+            const res = await fetch("/api/auth/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ fullName, username, password, confirmPassword, gender }),
+            });
 
             const data = await res.json();
             if (data.error) {
                 throw new Error(data.error);
             }
-
             localStorage.setItem("chat-user", JSON.stringify(data));
             setAuthUser(data);
-
         } catch (error) {
             toast.error(error.message);
-        }
-        finally {
+        } finally {
             setLoading(false);
         }
     };
@@ -42,19 +38,26 @@ export default useSignup;
 
 function handleInputErrors({ fullName, username, password, confirmPassword, gender }) {
     if (!fullName || !username || !password || !confirmPassword || !gender) {
-        toast.error("Please fill in all the fields.")
+        toast.error("Please fill in all fields");
         return false;
     }
 
     if (password !== confirmPassword) {
-        toast.error("Passwords Do not match");
+        toast.error("Passwords do not match");
         return false;
     }
 
     if (password.length < 6) {
-        toast.error("Password must be atleast 6 characters");
+        toast.error("Password must be at least 6 characters");
         return false;
     }
 
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/;
+
+    if (!passwordRegex.test(password)) {
+        toast.error("Password must contain at least one uppercase letter, one lowercase letter, and one number");
+        return false;
+    }
+    
     return true;
 }
